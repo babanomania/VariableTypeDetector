@@ -28,7 +28,7 @@ def create_model( file_path, headers ):
     #X_train = scaler.transform(X_train)
     #X_test = scaler.transform(X_test)
 
-    mlp = MLPClassifier(hidden_layer_sizes=(13,13,13),max_iter=50000)
+    mlp = MLPClassifier(hidden_layer_sizes=(25,25,25),max_iter=10000, verbose=False )
     mlp.fit(X_train,y_train)
 
     print " -- model build done -- "

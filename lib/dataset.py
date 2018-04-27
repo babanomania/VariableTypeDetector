@@ -8,7 +8,7 @@ def file_to_dataset( file_name ):
         for line in raw_data_file:
 
             data_line = line.rstrip().split(',')
-            str_dataset = transform_to_dataset( data_line[1] )
+            str_dataset = transform_to_dataset( data_line[1].strip() )
             dataset.append(str_dataset)
 
     return dataset
@@ -20,7 +20,7 @@ def file_to_predictions( file_name ):
         for line in raw_data_file:
 
             data_line = line.rstrip().split(',')
-            predictions.append(data_line[0])
+            predictions.append(data_line[0].strip())
 
     return predictions
 
@@ -31,7 +31,7 @@ def file_to_testdata( file_name ):
         for line in raw_data_file:
 
             data_line = line.rstrip().split(',')
-            testdata.append(data_line[1])
+            testdata.append(data_line[1].strip())
 
     return testdata
 
