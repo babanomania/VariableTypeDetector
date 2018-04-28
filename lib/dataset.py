@@ -1,4 +1,4 @@
-
+import re
 from lib.util import *
 
 def file_to_dataset( file_name ):
@@ -37,41 +37,23 @@ def file_to_testdata( file_name ):
 
 def transform_to_dataset( testData ):
 
-    isNumber = False
-    isSpace = False
-    isHyphen = False
-    isDot = False
-    isColon = False
-    isString = False
-    isOthSpChr = False
-
-    isLenDate = False
-    isLenTMSP = False
+    hasNumber = False
+    hasOthSpChr = False
 
     for a in testData:
 
-        if is_number(a):
-            isNumber = True
+        if a.isdigit():
+            hasNumber = True
 
-        elif ( a == ' ' ):
-            isSpace = True
+        elif ( not ( a.isalpha() or ' ' in testData or '-' in testData or '.' in testData or ':' in testData) ):
+            hasOthSpChr = True
 
-        elif ( a == '-' ):
-            isHyphen = True
-
-        elif ( a == '.' ):
-            isDot = True
-
-        elif ( a == ':' ):
-            isColon = True
-
-        elif a.isalpha():
-            isString = True
-
-        else:
-            isOthSpChr = True
-
-    return [ sigmoid(isNumber), sigmoid(isSpace), sigmoid(isHyphen),
-             sigmoid(isDot), sigmoid(isColon), sigmoid(isString), sigmoid(isOthSpChr),
+    return [ sigmoid(is_number(testData)),
+             sigmoid(re.match(".*\d.*", testData)),
+             sigmoid(' ' in testData),
+             sigmoid('-' in testData),
+             sigmoid('.' in testData),
+             sigmoid(':' in testData),
+             sigmoid( hasOthSpChr ),
              sigmoid( len(testData) == len('12-12-1900') ),
              sigmoid( len(testData) == len('12-12-1900 12:12:12') ) ]

@@ -6,7 +6,13 @@ def is_number(s):
         return True
 
     except ValueError:
-        return False
+
+        try:
+            float(s)
+            return True
+
+        except ValueError:
+                return False
 
 def sigmoid(bool):
     if bool:
